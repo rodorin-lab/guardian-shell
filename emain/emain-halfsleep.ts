@@ -207,7 +207,7 @@ export function enableHalfSleep(hermesEndpoint: string) {
         },
     ]);
 
-    tray.setToolTip("🛸 Wave Terminal — 半スリープ中 (Hermes起動中)");
+    tray.setToolTip("🛡️ GUARDIAN SHELL — 半スリープ中 (Hermes起動中)");
     tray.setContextMenu(contextMenu);
 
     tray.on("double-click", () => {
