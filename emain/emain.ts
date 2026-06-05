@@ -41,6 +41,8 @@ import {
 } from "./emain-platform";
 import { ensureHotSpareTab, setMaxTabCacheSize } from "./emain-tabview";
 import { getIsWaveSrvDead, getWaveSrvProc, getWaveSrvReady, runWaveSrv } from "./emain-wavesrv";
+import { getHermesEndpoint, getHermesReady, runHermesSrv, stopHermesSrv } from "./emain-hermes";
+import { disableHalfSleep, enableHalfSleep, isHalfSleep } from "./emain-halfsleep";
 import {
     createBrowserWindow,
     createNewWaveWindow,
@@ -292,6 +294,9 @@ electronApp.on("before-quit", (e) => {
     }
     setGlobalIsQuitting(true);
     updater?.stop();
+    if (!isHalfSleep()) {
+        stopHermesSrv();
+    }
     if (unamePlatform == "win32") {
         // win32 doesn't have a SIGINT, so we just let electron die, which
         // ends up killing wavesrv via closing it's stdin.
@@ -397,6 +402,18 @@ async function appMain() {
     }
     const ready = await getWaveSrvReady();
     console.log("wavesrv ready signal received", ready, Date.now() - startTs, "ms");
+
+    // Start embedded Hermes Agent for Wave AI
+    fireAndForget(async () => {
+        try {
+            await runHermesSrv();
+            await getHermesReady();
+            const hermesEp = getHermesEndpoint();
+            console.log("hermes ready:", hermesEp);
+        } catch (e) {
+            console.log("Hermes not available:", e);
+        }
+    });
     await electronApp.whenReady();
     configureAuthKeyRequestInjection(electron.session.defaultSession);
     initIpcHandlers();

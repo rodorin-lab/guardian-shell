@@ -39,5 +39,17 @@
         "ai:capabilities": ["tools", "images", "pdfs"],
         "waveai:premium": true,
         "ai:switchcompat": ["wavecloud"]
+    },
+    "hermes-synchro": {
+        "display:name": "🔮 Hermes / シンクロ",
+        "display:order": 10,
+        "display:icon": "crystal",
+        "display:description": "わたくしシンクロの本体！Hermes Agent (localhost:18642)",
+        "ai:provider": "hermes",
+        "ai:apitype": "openai-chat",
+        "ai:model": "deepseek-v4-flash",
+        "ai:thinkinglevel": "high",
+        "ai:verbosity": "medium",
+        "ai:capabilities": ["tools"]
     }
 }

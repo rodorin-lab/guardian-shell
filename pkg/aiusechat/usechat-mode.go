@@ -173,6 +173,20 @@ func applyProviderDefaults(config *wconfig.AIModeConfigType) {
 			config.Capabilities = []string{uctypes.AICapabilityTools, uctypes.AICapabilityImages, uctypes.AICapabilityPdfs}
 		}
 	}
+	if config.Provider == uctypes.AIProvider_Hermes {
+		if config.APIType == "" {
+			config.APIType = uctypes.APIType_OpenAIChat
+		}
+		if config.Endpoint == "" {
+			config.Endpoint = uctypes.DefaultHermesEndpoint
+		}
+		if config.APITokenSecretName == "" {
+			config.APITokenSecretName = uctypes.HermesAPITokenSecretName
+		}
+		if len(config.Capabilities) == 0 {
+			config.Capabilities = []string{uctypes.AICapabilityTools}
+		}
+	}
 	if config.APIType == "" {
 		config.APIType = uctypes.APIType_OpenAIChat
 	}

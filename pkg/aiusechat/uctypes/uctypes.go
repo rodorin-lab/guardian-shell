@@ -33,7 +33,11 @@ const (
 	AIProvider_Azure       = "azure"
 	AIProvider_AzureLegacy = "azure-legacy"
 	AIProvider_Custom      = "custom"
+	AIProvider_Hermes      = "hermes"
 )
+
+const DefaultHermesEndpoint = "http://127.0.0.1:18642/v1/chat/completions"
+const HermesAPITokenSecretName = "HERMES_KEY"
 
 type UseChatRequest struct {
 	Messages []UIMessage `json:"messages"`
