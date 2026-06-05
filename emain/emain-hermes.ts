@@ -22,6 +22,10 @@ const hermesReady: Promise<boolean> = new Promise((resolve, _) => {
     hermesReadyResolve = resolve;
 });
 
+export function getHermesEndpoint(): string {
+    return HermesEndpoint;
+}
+
 export function getHermesReady(): Promise<boolean> {
     return hermesReady;
 }
